@@ -117,4 +117,41 @@ body {
     background-color: var(--gray-light);
 }
 
+#paginacao {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#controle-paginacao label {
+    font-size: 15px;
+    background-color: var(--primary-dark);
+}
+
+#pagina {
+    border: 1px solid var(--primary-medium);
+    border-radius: 5px;
+}
+
+.container-btn,
+.btn-voltar
+#btnProximo {
+    margin-top: 0px;
+    padding: 5px 10px;
+    background-color: var(--primary-medium);
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.conteiner-btn
+#btn-voltar
+#btnProximo:hover {
+    background-color: var(--primary-medium);
+}
+
 
