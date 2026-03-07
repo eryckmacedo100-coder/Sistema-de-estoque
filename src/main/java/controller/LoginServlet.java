@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -22,27 +23,24 @@ public class LoginServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         
-        String usuario = request.getParameter("inputUser");
-        String senha = request.getParameter("inputPassword");
+        String usuario = request.getParameter("users");
+        String senha = request.getParameter("passw");
         
-        UserModel userModel = new UserModel();
+        UserModel userModel = new UserModel ();
         userModel.setUsername(usuario);
         userModel.setPassword(senha);
         
-        UserDAO dao = new UserDAO();
+        UserDAO dao = new UserDAO ();
         
-        if(dao.validarLogin(userModel)) {
-            HttpSession session = 
+        if (dao.validarLogin(userModel)) {
+            HttpSession session =
                     request.getSession();
             
             session.setAttribute("usuario", usuario);
             
             response.sendRedirect("pages/dashboard.html");
-    }else{
-       response.sendRedirect("index.html");
+        } else {
+            response.sendRedirect("index.html");
+        }
     }
 }
-}
-    
-
-
