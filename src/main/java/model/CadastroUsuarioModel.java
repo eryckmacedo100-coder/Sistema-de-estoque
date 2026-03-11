@@ -126,5 +126,3 @@ public class CadastroUsuarioModel {
     public void setFuncao(String funcao) {
         this.funcao = funcao;
     }
-
-    
