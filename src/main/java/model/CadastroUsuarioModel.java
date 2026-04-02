@@ -57,11 +57,11 @@ public class CadastroUsuarioModel {
         this.cpf = cpf;
     }
     
-    public long getCep () {
+    public Long getCep () {
         return this.cep;
     }
     
-    public void setCep (long cep) {
+    public void setCep (Long cep) {
         this.cep = cep;
     }
     
@@ -97,11 +97,11 @@ public class CadastroUsuarioModel {
         this.cidade = cidade;
     }
     
-    public long getNumero () {
+    public Long getNumero () {
         return this.numero;
     }
     
-    public void setNumero (long numero) {
+    public void setNumero (Long numero) {
         this.numero = numero;
     }
     

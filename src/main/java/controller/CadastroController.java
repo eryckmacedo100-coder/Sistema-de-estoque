@@ -32,17 +32,17 @@ public class CadastroController extends HttpServlet {
         user.setSexo(request.getParameter("sexo"));
         user.setDtaNascimento(request.getParameter("dtaNascimento"));
         user.setEmail(request.getParameter("email"));
-        user.setNome(request.getParameter("telefone"));
-        user.setNome(request.getParameter("usuario"));
-        user.setNome(request.getParameter("senha"));
-        user.setNome(request.getParameter("funcao"));
-        user.setNome(request.getParameter("cep"));
-        user.setNome(request.getParameter("endereco"));
-        user.setNome(request.getParameter("cidade"));
-        user.setNome(request.getParameter("bairro"));
-        user.setNome(request.getParameter("estado"));
-        user.setNome(request.getParameter("numero"));
-        user.setNome(request.getParameter("complemento"));  
+        user.setTelefone(request.getParameter("telefone"));
+        user.setCep(Long.parseLong(request.getParameter("cep")));
+        user.setEndereco(request.getParameter("endereco"));
+        user.setEstado(request.getParameter("estado"));
+        user.setBairro(request.getParameter("bairro"));
+        user.setCidade(request.getParameter("cidade"));
+        user.setNumero(Long.parseLong(request.getParameter("numero")));
+        user.setComplemento(request.getParameter("complemento")); 
+        user.setNomeusuario(request.getParameter("nomeUsuario"));
+        user.setSenha(request.getParameter("senha"));
+        user.setFuncao(request.getParameter("funcao"));
         
         CadastroUsersDAO dao = new CadastroUsersDAO();
         

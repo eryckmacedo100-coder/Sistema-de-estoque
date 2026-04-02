@@ -1,18 +1,21 @@
-# Criação da imagem docker
-FROM tomcat:11.0-jdk21-temurin
+FROM maven:3.9-eclipse-temurin-21 AS build
 
+WORKDIR /app
 
-# Remoção dos arquivos WEBAPPS do tomcat
+COPY pom.xml .
+
+RUN mvn dependency:go-offline
+
+COPY src ./src
+
+RUN mvn clean package -DskipTests
+
+FROM tomcat:11.0-jdk25-temurin
+
 RUN rm -rf /usr/local/tomcat/webapps/*
 
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
-# Copia dos arquivos do localhost para a imagem docker
-COPY target/app.war /usr/local/tomcat/webapps/ROOT.war
-
-
-# Abrir a porta 8080
 EXPOSE 8080
 
-
-# Execução do docker
 CMD ["catalina.sh", "run"]
