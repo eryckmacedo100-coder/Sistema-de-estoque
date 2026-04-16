@@ -41,3 +41,15 @@ INSERT INTO users (
     '40000-000', 'Rua Exemplo', '123', 'Centro', 'Salvador', 'BA', 'N/A'
 );
 
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_barras VARCHAR(100) NOT NULL,
+    nome_produto VARCHAR(255) NOT NULL,
+    fabricante VARCHAR(255),
+    marca VARCHAR(255),
+    data_fabricacao DATE,
+    data_vencimento DATE,
+    quantidade BIGINT,
+    valor DECIMAL(10,2),
+    total DECIMAL(10,2)
+);

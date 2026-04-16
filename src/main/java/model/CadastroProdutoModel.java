@@ -15,9 +15,18 @@ public class CadastroProdutoModel {
     private String fabricante;
     private String marca;
     private String dataFabricacao;
+    private String dataVencimento;
     private long quantidade;
     private String valor;
     private String total;
+
+    public String getDataVencimento() {
+        return dataVencimento;
+    }
+    
+    public void setDataVencimento(String dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    } 
     
     public CadastroProdutoModel () {
     }

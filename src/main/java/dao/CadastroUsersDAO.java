@@ -49,7 +49,7 @@ public class CadastroUsersDAO {
         return true;
 
     } catch (Exception e) {
-        // Isso aqui fofoca o erro lá na tela Output do NetBeans
+        
         System.out.println("ERRO AO SALVAR NO BANCO: " + e.getMessage()); 
         e.printStackTrace();
         return false;
