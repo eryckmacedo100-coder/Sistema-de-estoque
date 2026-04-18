@@ -19,6 +19,7 @@ public class CadastroProdutoModel {
     private long quantidade;
     private String valor;
     private String total;
+    private String status;
 
     public String getDataVencimento() {
         return dataVencimento;
@@ -93,5 +94,13 @@ public class CadastroProdutoModel {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -51,5 +51,6 @@ CREATE TABLE produtos (
     data_vencimento DATE,
     quantidade BIGINT,
     valor DECIMAL(10,2),
-    total DECIMAL(10,2)
+    total DECIMAL(10,2),
+    status VARCHAR(255)
 );
