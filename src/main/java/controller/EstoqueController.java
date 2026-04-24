@@ -1,8 +1,12 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package controller;
 
 import com.google.gson.Gson;
 import dao.CadastroProdutosDAO;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,14 +14,18 @@ import java.io.IOException;
 import java.util.List;
 import model.CadastroProdutoModel;
 
-@WebServlet("/api/estoque")
-public class EstoqueController extends HttpServlet {
 
+public class EstoqueController extends HttpServlet {
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws ServletException, IOException {
         
-        CadastroProdutosDAO dao = new CadastroProdutosDAO();
-        List<CadastroProdutoModel> lista = dao.listar();
+        String nome = request.getParameter("nome");
+        String tipo = request.getParameter("tipo");
+        String data = request.getParameter("data");
+        
+        CadastroProdutosDAO dao = new CadastroProdutosDAO ();
+        List<CadastroProdutoModel> lista = dao.listarComFiltro(nome, tipo, data);
         
         String json = new Gson().toJson(lista);
         

@@ -1,25 +1,31 @@
 async function filtroEstoque() {
-    try{
-    const response = await fetch("http://localhost:8080/api/estoque")
-    const dados = await response.json()
+    try {
 
-    const nome = document.getElementById("pesquisarNome").value.toLowerCase();
-    const tipo = document.getElementById("tipoMovimentacao").value;
-    const data = document.getElementById("filtroData").value;
+        const response = await fetch("http://localhost:8080/api/estoque");
+        const dados = await response.json();
 
-    const tabela = document.getElementById("corpoTabela");
-    tabela.innerHTML = "";
+        const nome = document.getElementById("pesquisarNome").value.toLowerCase();
+        const tipo = document.getElementById("tipoMovimentacao").value;
+        const data = document.getElementById("filtroData").value;
+        
+        const url = `http://localhost:8080/api/estoque?nome=
+            ${encodeURIComponent(nome)}
+            &tipo=${encodeURIComponent(tipo)}&
+            data=${encodeURIcomponent(data)}`;
+        
+        const tabela = document.getElementById("corpoTabela");
+        tabela.innerHTML = "";
 
-    const filtrados = dados.filter(item => {
-        const matchNome = nome === "" || item.nomeProduto.toLowerCase().includes(nome);
-        const matchTipo = tipo === "" || item.status === tipo;
-        const matchData = data === "" || item.dataFabricacao === data;
+        const filtrados = dados.filter(item => {
+            const matchNome = nome === "" || item.nomeProduto.toLowerCase().includes(nome);
+            const matchTipo = tipo === "" || item.status === tipo;
+            const matchData = data === "" || item.dataFabricacao === data;
+          
+            return matchNome && matchTipo && matchData;
+        });
 
-        return match && matchTipo && matchData;
-    });
-
- filtrados.forEach(item =>{
-        const linha =`
+        filtrados.forEach(item => {
+            const linha = `
             <tr>
                 <td>${item.codigoBarras}</td>
                 <td>${item.nomeProduto}</td>
@@ -30,10 +36,14 @@ async function filtroEstoque() {
                 <td>${parseFloat(item.total).toFixed(2)}</td>
                 <td>${item.status}</td>
             </tr>
-        `;
-        tabela.innerHTML += linha;
-    });
-} catch (erro) {
+        ` ;
+            tabela.innerHTML += linha;
+        });
+
+    } catch (erro) {
         console.error("Erro ao filtrar", erro);
     }
 }
+
+document.getElementById("btnPesquisar")
+        .addEventListener("click", filtroEstoque);

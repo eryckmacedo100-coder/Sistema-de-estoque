@@ -1,22 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dao;
 
 import connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.CadastroProdutoModel;
 
+/**
+ *
+ * @author 232.004390
+ */
 public class CadastroProdutosDAO {
     public boolean salvar(CadastroProdutoModel produto) {
         String sql = "INSERT INTO produtos" +
                 "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        try(Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement (sql)) {
+                "VALUES (?, ? , ?, ?, ?, ?, ?, ?, ?,)";
+     
+        try(Connection conn = ConnectionFactory.getConnection()) {
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
             
             stmt.setString(1, produto.getCodigoBarras());
             stmt.setString(2, produto.getNomeProduto());
@@ -31,22 +40,41 @@ public class CadastroProdutosDAO {
             stmt.executeUpdate();
             
             return true;
-            
-        }catch(SQLException e){
+        } catch (Exception e) {   
             e.printStackTrace();
             return false;
-        }
+      }
     }
-    
-    public List<CadastroProdutoModel> listar(){
+    public List<CadastroProdutoModel> listarComFiltro(String nome, String tipo, String data) {
         List<CadastroProdutoModel> lista = new ArrayList<>();
         
-        String sql = "SELECT * FROM produtos";
+        StringBuilder sql = new StringBuilder ("SELECT * FROM produtos WHERE 1=1");
         
-        try (Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()){
+        if(nome != null && !nome.isEmpty()) {
+            sql.append("AND LOWER(nome_produto) LIKE ?");
+        }
+        if(tipo != null && !tipo.isEmpty()) {
+            sql.append(" AND status = ?");
+        }
+        if(data != null && !data.isEmpty()) {
+            sql.append(" AND data_fabricacao = ?");
+        }
             
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql.toString())){
+            
+            int index= 1;
+            
+            if(nome != null && !nome.isEmpty()){
+               stmt.setString(index++, "%" + nome.toLowerCase());
+            }
+            if(tipo != null && !tipo.isEmpty()){
+                stmt.setString(index, tipo);
+            }
+            if(data != null && !data.isEmpty()){
+                stmt.setString(index++, data));
+            }
+            ResultSet rs = stmt.executeQuery();
             
             while(rs.next()) {
                 CadastroProdutoModel p = new CadastroProdutoModel();

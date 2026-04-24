@@ -1,4 +1,5 @@
-USE kids_store;
+CREATE DATABASE IF NOT EXISTS sistema_estoque;
+USE sistema_estoque;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
