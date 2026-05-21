@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/color.css" />
+        <link rel="stylesheet" href="../css/dashboard.css" />
+        <link rel="stylesheet" href="../css/cadastroProdutos.css" />
+        <title>Cadastrar Produto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header id="header">
+            <h1 id="tituloCadastro">Sistema de estoque</h1>
+            <nav id="menu">
+                <ul class="menu-lista">
+                    <li><a href="/pages/projeto.html">Início</a></li>
+                    <li><a href="gerenciamento.html">Gerenciamento</a></li>
+                    <li><a href="cadastro.html" class="btn-menu">Cadastro</a></li>
+                    <li><a href="#" id="btnLogout">Sair</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="form-container">
+                <h2 class="form-titulo">Cadastrar Produto</h2>
+
+                <!-- Mensagem de feedback -->
+                <div id="msgSucesso" class="msg-sucesso" style="display:none">
+                    Produto cadastrado com sucesso!
+                </div>
+                <div id="msgErro" class="msg-erro" style="display:none">
+                    Erro ao cadastrar. Verifique os campos e tente novamente.
+                </div>
+
+                <form action="../cadastroProdutos" method="POST" id="formCadastro">
+
+                    <!-- Código de barras com botão gerar -->
+                    <div class="linha-form">
+                        <div class="grupo-form full">
+                            <label for="codigoBarras">Código de Barras</label>
+                            <div class="campo-com-botao">
+                                <input type="text" name="codigoBarras" id="codigoBarras"
+                                       placeholder="Digite ou gere automaticamente" required />
+                                <button type="button" class="btn-gerar" onclick="gerarCodigoBarras()">
+                                    Gerar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label for="nomeProduto">Nome do Produto</label>
+                            <input type="text" name="nomeProduto" id="nomeProduto"
+                                   placeholder="Ex: Fralda Pampers" required />
+                        </div>
+                        <div class="grupo-form">
+                            <label for="fabricante">Fabricante</label>
+                            <input type="text" name="fabricante" id="fabricante"
+                                   placeholder="Ex: Procter & Gamble" required />
+                        </div>
+                    </div>
+
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label for="marca">Marca</label>
+                            <input type="text" name="marca" id="marca"
+                                   placeholder="Ex: Pampers" required />
+                        </div>
+                        <div class="grupo-form">
+                            <label for="status">Status</label>
+                            <select name="status" id="status" required>
+                                <option value="entrada">Entrada</option>
+                                <option value="saida">Saída</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label for="dataFabricacao">Data de Fabricação</label>
+                            <input type="date" name="dataFabricacao" id="dataFabricacao" required />
+                        </div>
+                        <div class="grupo-form">
+                            <label for="dataVencimento">Data de Vencimento</label>
+                            <input type="date" name="dataVencimento" id="dataVencimento" required />
+                        </div>
+                    </div>
+
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" name="quantidade" id="quantidade"
+                                   placeholder="0" min="0" required />
+                        </div>
+                        <div class="grupo-form">
+                            <label for="valor">Valor Unitário (R$)</label>
+                            <input type="number" name="valor" id="valor"
+                                   placeholder="0.00" min="0" step="0.01" required />
+                        </div>
+                        <div class="grupo-form">
+                            <label for="total">Total (R$)</label>
+                            <input type="number" name="total" id="total"
+                                   placeholder="Calculado automaticamente" min="0" step="0.01" readonly />
+                        </div>
+                    </div>
+
+                    <div class="acoes-form">
+                        <a href="projeto.html" class="btn-cancelar">Cancelar</a>
+                        <button type="submit" class="btn-salvar">Salvar Produto</button>
+                    </div>
+
+                </form>
+            </section>
+        </main>
+
+        <script src="../js/cadastroProdutos.js"></script>
+        <script>
+            // Mostra mensagem de sucesso ou erro vindo do servidor
+            if (window.location.search.includes("sucesso=1")) {
+                document.getElementById("msgSucesso").style.display = "block";
+            }
+            if (window.location.search.includes("erro=1")) {
+                document.getElementById("msgErro").style.display = "block";
+            }
+        </script>
+        <script src="../js/validarLogin.js"></script>
+        <script src="../js/logout.js"></script>
+    </body>
+</html>

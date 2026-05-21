@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/color.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/gerenciamento.css" />
+    <title>Gerenciamento - Sistema de Estoque</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header id="header">
+        <h1 id="tituloCadastro">Sistema de estoque</h1>
+        <nav id="menu">
+            <ul class="menu-lista">
+                <li><a href="/pages/projeto.html">Início</a></li>
+                <li><a href="gerenciamento.html" class="btn-menu">Gerenciamento</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+                <li><a href="#" id="btnLogout">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="gerenciamento-container">
+            <h2 class="gerenciamento-titulo">Gerenciamento</h2>
+
+            <!-- Abas -->
+            <div class="abas">
+                <button class="aba-btn ativa" onclick="trocarAba('produtos', this)">Produtos</button>
+                <button class="aba-btn" onclick="trocarAba('usuarios', this)">Usuários</button>
+                <button class="aba-btn" onclick="trocarAba('estoque', this)">Estoque</button>
+                <button class="aba-btn" onclick="trocarAba('relatorio', this)">Relatório</button>
+            </div>
+
+            <!-- ===== PAINEL: PRODUTOS ===== -->
+            <div id="painel-produtos" class="painel ativo">
+                <div class="barra-acoes">
+                    <input type="text" id="buscaProduto" class="input-busca" placeholder="Buscar produto..." oninput="filtrarTabelaProdutos()" />
+                    <span class="contagem" id="contagemProdutos"></span>
+                </div>
+                <div class="tabela-wrapper-ger">
+                    <table class="tabela-gerenciamento" id="tabelaProdutos">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Fabricante</th>
+                                <th>Marca</th>
+                                <th>Qtd</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoProdutos">
+                            <tr><td colspan="8" class="empty-state">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== PAINEL: USUÁRIOS ===== -->
+            <div id="painel-usuarios" class="painel">
+                <div class="barra-acoes">
+                    <input type="text" id="buscaUsuario" class="input-busca" placeholder="Buscar usuário..." oninput="filtrarTabelaUsuarios()" />
+                    <span class="contagem" id="contagemUsuarios"></span>
+                </div>
+                <div class="tabela-wrapper-ger">
+                    <table class="tabela-gerenciamento" id="tabelaUsuarios">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuário</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Função</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoUsuarios">
+                            <tr><td colspan="7" class="empty-state">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== PAINEL: ESTOQUE ===== -->
+            <div id="painel-estoque" class="painel">
+                <div id="alertaEstoqueBaixo" class="alerta-box" style="display:none">
+                    <strong>⚠️ Produtos com estoque baixo (≤ 5 unidades):</strong>
+                    <span id="listaBaixo"></span>
+                </div>
+
+                <div class="form-movimentacao">
+                    <h3>Registrar Movimentação</h3>
+                    <div class="campo-modal">
+                        <label>Código de Barras do Produto</label>
+                        <input type="text" id="movCodigo" placeholder="Ex: 7891234567890" />
+                    </div>
+                    <div class="linha-form-mov">
+                        <div class="campo-modal">
+                            <label>Tipo</label>
+                            <select id="movTipo">
+                                <option value="entrada">Entrada</option>
+                                <option value="saida">Saída</option>
+                            </select>
+                        </div>
+                        <div class="campo-modal">
+                            <label>Quantidade</label>
+                            <input type="number" id="movQuantidade" min="1" value="1" />
+                        </div>
+                    </div>
+                    <div class="modal-acoes" style="justify-content:flex-start;margin-top:14px">
+                        <button class="btn-salvar-modal" onclick="registrarMovimentacao()">Registrar</button>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary-dark);margin-bottom:12px;font-size:16px">Situação Atual do Estoque</h3>
+                <div class="tabela-wrapper-ger">
+                    <table class="tabela-gerenciamento" id="tabelaEstoqueGer">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Marca</th>
+                                <th>Quantidade</th>
+                                <th>Valor Unit.</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoEstoqueGer">
+                            <tr><td colspan="6" class="empty-state">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== PAINEL: RELATÓRIO ===== -->
+            <div id="painel-relatorio" class="painel">
+                <div id="cards-relatorio" style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:28px">
+                    <div class="card-resumo">
+                        <h2 class="titulo-card">Total de Produtos</h2>
+                        <p class="valor-card" id="relTotalProdutos">—</p>
+                    </div>
+                    <div class="card-resumo">
+                        <h2 class="titulo-card">Entradas</h2>
+                        <p class="valor-card" id="relEntradas">—</p>
+                    </div>
+                    <div class="card-resumo">
+                        <h2 class="titulo-card">Saídas</h2>
+                        <p class="valor-card" id="relSaidas">—</p>
+                    </div>
+                    <div class="card-resumo">
+                        <h2 class="titulo-card">Estoque Baixo</h2>
+                        <p class="valor-card" id="relBaixo">—</p>
+                    </div>
+                    <div class="card-resumo">
+                        <h2 class="titulo-card">Usuários Cadastrados</h2>
+                        <p class="valor-card" id="relUsuarios">—</p>
+                    </div>
+                </div>
+
+                <h3 style="color:var(--primary-dark);margin-bottom:12px;font-size:16px">Produtos com Estoque Baixo (≤ 5)</h3>
+                <div class="tabela-wrapper-ger">
+                    <table class="tabela-gerenciamento">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Fabricante</th>
+                                <th>Quantidade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoRelBaixo">
+                            <tr><td colspan="5" class="empty-state">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MODAL: EDITAR PRODUTO ===== -->
+    <div id="modalProduto" class="modal-overlay">
+        <div class="modal-caixa">
+            <button class="modal-fechar" onclick="fecharModal('modalProduto')">×</button>
+            <div class="modal-titulo">Editar Produto</div>
+            <div class="campo-modal">
+                <label>Código de Barras</label>
+                <input type="text" id="editCodigo" readonly />
+            </div>
+            <div class="campo-modal">
+                <label>Nome do Produto</label>
+                <input type="text" id="editNome" />
+            </div>
+            <div class="campo-modal">
+                <label>Fabricante</label>
+                <input type="text" id="editFabricante" />
+            </div>
+            <div class="campo-modal">
+                <label>Marca</label>
+                <input type="text" id="editMarca" />
+            </div>
+            <div class="campo-modal">
+                <label>Data de Fabricação</label>
+                <input type="date" id="editDataFab" />
+            </div>
+            <div class="campo-modal">
+                <label>Data de Vencimento</label>
+                <input type="date" id="editDataVenc" />
+            </div>
+            <div class="campo-modal">
+                <label>Quantidade</label>
+                <input type="number" id="editQuantidade" min="0" />
+            </div>
+            <div class="campo-modal">
+                <label>Valor Unitário</label>
+                <input type="number" id="editValor" step="0.01" min="0" />
+            </div>
+            <div class="campo-modal">
+                <label>Total</label>
+                <input type="number" id="editTotal" step="0.01" min="0" />
+            </div>
+            <div class="campo-modal">
+                <label>Status</label>
+                <select id="editStatus">
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                </select>
+            </div>
+            <div class="modal-acoes">
+                <button class="btn-cancelar-modal" onclick="fecharModal('modalProduto')">Cancelar</button>
+                <button class="btn-salvar-modal" onclick="salvarProduto()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: EDITAR USUÁRIO ===== -->
+    <div id="modalUsuario" class="modal-overlay">
+        <div class="modal-caixa">
+            <button class="modal-fechar" onclick="fecharModal('modalUsuario')">×</button>
+            <div class="modal-titulo">Editar Usuário</div>
+            <div class="campo-modal">
+                <label>ID</label>
+                <input type="text" id="editUserId" readonly />
+            </div>
+            <div class="campo-modal">
+                <label>Usuário (login)</label>
+                <input type="text" id="editUserUsername" readonly />
+            </div>
+            <div class="campo-modal">
+                <label>Nome</label>
+                <input type="text" id="editUserNome" />
+            </div>
+            <div class="campo-modal">
+                <label>Sobrenome</label>
+                <input type="text" id="editUserSobrenome" />
+            </div>
+            <div class="campo-modal">
+                <label>Email</label>
+                <input type="email" id="editUserEmail" />
+            </div>
+            <div class="campo-modal">
+                <label>Telefone</label>
+                <input type="text" id="editUserTelefone" />
+            </div>
+            <div class="campo-modal">
+                <label>Função</label>
+                <input type="text" id="editUserFuncao" />
+            </div>
+            <div class="campo-modal">
+                <label>Matrícula</label>
+                <input type="text" id="editUserMatricula" />
+            </div>
+            <div class="modal-acoes">
+                <button class="btn-cancelar-modal" onclick="fecharModal('modalUsuario')">Cancelar</button>
+                <button class="btn-salvar-modal" onclick="salvarUsuario()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de notificação -->
+    <div id="toast" class="toast"></div>
+
+    <script src="../js/gerenciamento.js"></script>
+    <script src="../js/validarLogin.js"></script>
+    <script src="../js/logout.js"></script>
+</body>
+</html>

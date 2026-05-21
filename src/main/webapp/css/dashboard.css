@@ -1,0 +1,295 @@
+/* ===== RESET / BASE ===== */
+* { box-sizing: border-box; }
+
+body {
+    background-color: var(--gray-light);
+    color: var(--gray-dark);
+    padding: 0;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+#header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+    color: var(--white);
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 2px 10px var(--shadow-default);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#tituloCadastro {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--white);
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* ===== MENU ===== */
+#menu { display: flex; }
+
+.menu-lista {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+
+.menu-lista li a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 20px;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.menu-lista li a:hover {
+    color: var(--white);
+    background-color: rgba(255,255,255,0.15);
+}
+
+.btn-menu {
+    background-color: var(--white) !important;
+    color: var(--primary-medium) !important;
+    font-weight: bold !important;
+    padding: 7px 18px !important;
+    border-radius: 20px !important;
+}
+
+.btn-menu:hover {
+    background-color: var(--primary-light) !important;
+    color: var(--primary-dark) !important;
+}
+
+/* ===== MAIN ===== */
+main {
+    padding: 28px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== CARDS DE RESUMO ===== */
+#resumoEstoque {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 0 0 28px 0;
+    flex-wrap: wrap;
+}
+
+.card-resumo {
+    background-color: var(--white);
+    box-shadow: 0 4px 14px var(--shadow-default);
+    border-radius: 14px;
+    width: 210px;
+    padding: 22px 20px;
+    text-align: center;
+    transition: all 0.25s ease;
+    border-top: 4px solid var(--primary-medium);
+}
+
+.card-resumo:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.titulo-card {
+    font-size: 13px;
+    color: var(--primary-medium);
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.valor-card {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+/* ===== FILTROS ===== */
+#filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+    align-items: flex-end;
+    background-color: var(--white);
+    padding: 16px 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-default);
+}
+
+.grupo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.grupo-filtro label {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.input-filtro,
+.select-filtro {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-medium);
+    outline: none;
+    font-size: 13px;
+    transition: border-color 0.2s;
+    background-color: var(--white);
+}
+
+.input-filtro:focus,
+.select-filtro:focus {
+    border-color: var(--primary-medium);
+    box-shadow: 0 0 0 2px rgba(27,108,168,0.12);
+}
+
+.botao-pesquisa,
+.btn-pesquisa {
+    padding: 9px 22px;
+    background-color: var(--primary-medium);
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.botao-pesquisa:hover,
+.btn-pesquisa:hover {
+    background-color: var(--primary-dark);
+}
+
+/* ===== TABELA ===== */
+.tabela-wrapper {
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 4px 10px var(--shadow-default);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#tabelaEstoque {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabelaEstoque th,
+#tabelaEstoque td {
+    padding: 12px 14px;
+    text-align: left;
+}
+
+#tabelaEstoque th {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+    color: var(--white);
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+#tabelaEstoque tr:nth-child(even) td {
+    background-color: #f8fafd;
+}
+
+#tabelaEstoque tr:hover td {
+    background-color: #eef5fb;
+}
+
+#tabelaEstoque td {
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--gray-dark);
+}
+
+/* ===== PAGINAÇÃO ===== */
+#paginacao {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.controle-paginacao label {
+    font-size: 14px;
+    color: var(--primary-dark);
+    font-weight: bold;
+}
+
+#pagina {
+    border: 1px solid var(--primary-medium);
+    border-radius: 6px;
+    padding: 5px 8px;
+    outline: none;
+}
+
+#btnVoltar,
+#btnProximo {
+    padding: 8px 18px;
+    background-color: var(--primary-medium);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#btnVoltar:hover,
+#btnProximo:hover {
+    background-color: var(--primary-dark);
+}
+
+/* ===== TOPO DA TABELA / BTN + ===== */
+.topo-tabela {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.btn-add {
+    background-color: var(--success);
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(27,156,133,0.3);
+}
+
+.btn-add:hover {
+    background-color: var(--success-hover);
+    transform: scale(1.1);
+}

@@ -1,0 +1,48 @@
+package util;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+
+@WebFilter("/*")
+public class AuthFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        HttpSession session = req.getSession(false);
+        String uri = req.getRequestURI();
+
+        // Recursos públicos: login, index, css, js
+        if (uri.contains("index.html") || uri.endsWith("/login")
+                || uri.contains("/css/") || uri.contains("/js/")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Cadastro de usuário é público (professor definiu assim)
+        if (uri.endsWith("/cadastro") || uri.contains("cadastro.html")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Verifica sessão
+        if (session == null || session.getAttribute("usuario") == null) {
+            res.sendRedirect(req.getContextPath() + "/index.html");
+            return;
+        }
+
+        chain.doFilter(request, response);
+    }
+}

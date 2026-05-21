@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/color.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+    <title>Sistema de Estoque - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <form action="login" method="post">
+        <div class="login-container">
+            <h1 class="login-titulo">Kids Store</h1>
+            <p class="login-subtitulo">Sistema de Gestão de Estoque</p>
+
+            <!-- Mostra erro se veio da URL ?erro=1 -->
+            <div id="msgErroLogin" class="login-erro" style="display:none">
+                Usuário ou senha incorretos. Tente novamente.
+            </div>
+
+            <div class="campo-login">
+                <label for="usuario">Usuário</label>
+                <input type="text" name="usuario" id="usuario" placeholder="Digite seu usuário" />
+            </div>
+
+            <div class="campo-login">
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" placeholder="Digite sua senha" />
+            </div>
+
+            <button type="submit" class="btn-login">Entrar</button>
+
+            <p class="login-link">Não tem conta? <a href="pages/cadastro.html">Cadastre-se</a></p>
+        </div>
+    </form>
+
+    <script>
+        // Mostra mensagem de erro se URL tiver ?erro=1
+        if (window.location.search.includes("erro=1")) {
+            document.getElementById("msgErroLogin").style.display = "block";
+        }
+    </script>
+</body>
+</html>

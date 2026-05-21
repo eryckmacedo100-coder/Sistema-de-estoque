@@ -1,0 +1,106 @@
+body {
+    background-color: var(--gray-light);
+    color: var(--gray-dark);
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+#main {
+    padding: 28px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.cadastro-wrapper {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow-default);
+    width: 100%;
+    max-width: 960px;
+}
+
+.cadastro-titulo {
+    font-size: 18px;
+    color: var(--primary-dark);
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.cadastro-grid {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.cadastro-secao {
+    flex: 1;
+    min-width: 280px;
+}
+
+.secao-titulo {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--primary-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--primary-light);
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.campo label {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.campo input,
+.campo select {
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-medium);
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    background-color: var(--white);
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--primary-medium);
+    box-shadow: 0 0 0 2px rgba(27,108,168,0.1);
+}
+
+.cadastro-btn {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cadastro-btn button {
+    padding: 12px 36px;
+    background-color: var(--success);
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cadastro-btn button:hover {
+    background-color: var(--success-hover);
+}

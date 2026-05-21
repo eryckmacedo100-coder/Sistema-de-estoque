@@ -1,0 +1,20 @@
+:root {
+    /* Cores principais */
+    --primary-dark:   #0f4c75;
+    --primary-medium: #1b6ca8;
+    --primary-light:  #bee3f8;
+
+    /* Ação / confirmação */
+    --success:        #1b9c85;
+    --success-hover:  #157a6e;
+
+    /* Neutros */
+    --white:          #ffffff;
+    --gray-light:     #f4f6f9;
+    --gray-medium:    #c8cdd4;
+    --gray-dark:      #2d3748;
+
+    /* Sombra */
+    --shadow-default: rgba(15, 76, 117, 0.12);
+    --shadow-hover:   rgba(15, 76, 117, 0.22);
+}
