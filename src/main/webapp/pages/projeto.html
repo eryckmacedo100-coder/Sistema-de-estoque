@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/color.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <title>Dashboard | Sistema de Estoque</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .header-saudacao { font-size:13px; color:var(--text-muted); font-weight:bold; }
+        .header-saudacao span { color:var(--primary-dark); }
+        #secaoGrafico { background:var(--white); border-radius:12px; box-shadow:0 4px 14px var(--shadow-default); padding:20px 24px; margin-bottom:22px; }
+        #secaoGrafico h3 { font-size:15px; color:var(--primary-dark); margin-bottom:14px; font-weight:bold; }
+        #graficoCanvas { width:100%; height:220px; }
+        .filtro-prateleira { min-width:130px; }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-brand">
+            <span class="hdr-icon">📦</span>
+            <span class="hdr-kids">Sistema de </span><span class="hdr-store">Estoque</span>
+        </div>
+        <nav id="menu">
+            <ul class="menu-lista">
+                <li class="header-saudacao">Olá, <span id="nomeUsuario">—</span></li>
+                <li><a href="/pages/projeto.html" class="menu-ativo">Início</a></li>
+                <li><a href="gerenciamento.html">Gerenciamento</a></li>
+                <li><a href="cadastroProdutos.html" class="btn-menu">+ Produto</a></li>
+                <li><button class="btn-dark" id="btnDark" title="Alternar tema">🌙</button></li>
+                <li><a href="#" id="btnLogout">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Cards -->
+        <section id="resumoEstoque">
+            <div class="card-resumo" style="border-top-color:#3282b8">
+                <h2 class="titulo-card">📥 Entrada</h2>
+                <p class="valor-card" id="cardEntrada">—</p>
+            </div>
+            <div class="card-resumo" style="border-top-color:#f39c12">
+                <h2 class="titulo-card">📤 Saída</h2>
+                <p class="valor-card" id="cardSaida">—</p>
+            </div>
+            <div class="card-resumo" style="border-top-color:#0f4c75">
+                <h2 class="titulo-card">📦 Total</h2>
+                <p class="valor-card" id="cardTotal">—</p>
+            </div>
+            <div class="card-resumo" id="cardReposicao" style="border-top-color:#1b9c85">
+                <h2 class="titulo-card">⚠️ Reposição</h2>
+                <p class="valor-card" id="cardQtdReposicao">—</p>
+            </div>
+            <div class="card-resumo" id="cardVencimento" style="border-top-color:#e74c3c">
+                <h2 class="titulo-card">📅 Vencendo</h2>
+                <p class="valor-card" id="cardQtdVencimento">—</p>
+            </div>
+        </section>
+
+        <!-- Gráfico -->
+        <section id="secaoGrafico">
+            <h3>📊 Entradas vs Saídas</h3>
+            <canvas id="graficoCanvas"></canvas>
+        </section>
+
+        <!-- Painel reposição -->
+        <section id="painelReposicao">
+            <h2>⚠️ Produtos que necessitam reposição / Emitir solicitação de compra</h2>
+            <div style="overflow-x:auto">
+                <table id="tabelaReposicao">
+                    <thead><tr><th>Nome</th><th>Prateleira</th><th>Qtd. Atual</th><th>Qtd. Mínima</th><th>Situação</th></tr></thead>
+                    <tbody id="corpoReposicao"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Painel vencimento -->
+        <section id="painelVencimento">
+            <h2>📅 Produtos próximos ao vencimento (30 dias)</h2>
+            <div style="overflow-x:auto">
+                <table id="tabelaVencimento">
+                    <thead><tr><th>Nome</th><th>Prateleira</th><th>Quantidade</th><th>Vencimento</th><th>Dias restantes</th></tr></thead>
+                    <tbody id="corpoVencimento"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Filtros -->
+        <section id="filtro">
+            <div class="grupo-filtro">
+                <label for="filtroData">Data</label>
+                <input type="date" id="filtroData" class="input-filtro">
+            </div>
+            <div class="grupo-filtro">
+                <label for="tipoMovimentacao">Tipo</label>
+                <select id="tipoMovimentacao" class="select-filtro">
+                    <option value="">Todos</option>
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                </select>
+            </div>
+            <div class="grupo-filtro filtro-prateleira">
+                <label for="filtroPrateleira">Prateleira</label>
+                <input type="text" id="filtroPrateleira" class="input-filtro" placeholder="Ex: A1">
+            </div>
+            <div class="grupo-filtro pesquisa-grande">
+                <label for="pesquisarNome">Pesquisar produto</label>
+                <input type="text" id="pesquisarNome" class="input-filtro" placeholder="Digite para buscar em tempo real...">
+            </div>
+            <div class="grupo-filtro">
+                <button id="btnPesquisar" class="btn-pesquisa">Pesquisar</button>
+            </div>
+            <div class="topo-tabela">
+                <a href="cadastroProdutos.html" class="btn-add" title="Novo produto">+</a>
+            </div>
+        </section>
+
+        <!-- Spinner -->
+        <div id="spinner" style="display:none; text-align:center; padding:30px;">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Tabela -->
+        <section id="tabelaEstoqueContainer">
+            <div class="tabela-wrapper">
+                <table id="tabelaEstoque">
+                    <thead>
+                        <tr>
+                            <th>Código de barras</th>
+                            <th>Nome</th>
+                            <th>Fabricante</th>
+                            <th>Marca</th>
+                            <th>Prateleira</th>
+                            <th>Quantidade</th>
+                            <th>Valor unitário</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Reposição</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabela"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="paginacao">
+            <div class="controle-paginacao">
+                <label for="pagina">Página</label>
+                <select id="pagina"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+            </div>
+            <div class="conteiner-btn">
+                <button id="btnVoltar">Voltar</button>
+                <button id="btnProximo">Próximo</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/filtro.js"></script>
+    <script src="../js/reposicao.js"></script>
+    <script src="../js/vencimento.js"></script>
+    <script src="../js/grafico.js"></script>
+    <script src="../js/darkmode.js"></script>
+    <script src="../js/saudacao.js"></script>
+    <script src="../js/validarLogin.js"></script>
+    <script src="../js/logout.js"></script>
+</body>
+</html>

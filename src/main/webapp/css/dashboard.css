@@ -1,0 +1,92 @@
+/* ── Base ── */
+body { background-color: var(--bg-page); color: var(--gray-dark); font-family: Arial, Helvetica, sans-serif; margin:0; padding:0; transition: background-color .3s, color .3s; }
+
+/* ── Dark mode ── */
+[data-theme="dark"] { --bg-page:#111827; --white:#1f2937; --gray-light:#1f2937; --gray-dark:#e5e7eb; --border-light:#374151; --text-muted:#9ca3af; --shadow-default:rgba(0,0,0,0.4); }
+[data-theme="dark"] #header { background:#1f2937; border-color:#374151; }
+[data-theme="dark"] .tabela-wrapper, [data-theme="dark"] #filtro, [data-theme="dark"] .barra-acoes { background:#1f2937; }
+[data-theme="dark"] #tabelaEstoque tbody tr:hover, [data-theme="dark"] #tabelaGerenciamento tbody tr:hover { background:#374151; }
+[data-theme="dark"] #tabelaEstoque tr:nth-child(even) td, [data-theme="dark"] #tabelaGerenciamento tr:nth-child(even) td { background:#273548; }
+[data-theme="dark"] .input-filtro, [data-theme="dark"] .select-filtro, [data-theme="dark"] .barra-acoes input, [data-theme="dark"] .barra-acoes select { background:#111827; color:#e5e7eb; border-color:#374151; }
+[data-theme="dark"] .card-resumo { background:#1f2937; }
+[data-theme="dark"] .modal-box { background:#1f2937; }
+[data-theme="dark"] .modal-grupo input, [data-theme="dark"] .modal-grupo select { background:#111827; color:#e5e7eb; border-color:#374151; }
+
+/* ── Header ── */
+#header { background:#fff; border-bottom:2px solid var(--border-light); padding:0 28px; display:flex; align-items:center; justify-content:space-between; height:62px; position:sticky; top:0; z-index:100; box-shadow:0 2px 10px var(--shadow-default); }
+.header-brand { display:flex; align-items:center; gap:6px; }
+.hdr-icon { font-size:20px; }
+.hdr-kids  { font-size:20px; font-weight:900; color:var(--primary-dark); letter-spacing:-0.5px; }
+.hdr-store { font-size:20px; font-weight:900; color:var(--success); letter-spacing:-0.5px; }
+
+/* ── Nav ── */
+#menu { display:flex; }
+.menu-lista { display:flex; gap:6px; list-style:none; padding:0; margin:0; align-items:center; }
+.menu-lista li a { text-decoration:none; color:var(--primary-medium); font-weight:bold; padding:6px 14px; border-radius:20px; transition:background-color .2s,color .2s; font-size:14px; }
+.menu-lista li a:hover { background:var(--primary-light); color:var(--primary-dark); }
+.btn-menu { background:var(--primary-medium)!important; color:#fff!important; }
+.btn-menu:hover { background:var(--primary-dark)!important; }
+.menu-ativo { background:var(--primary-light); color:var(--primary-dark)!important; }
+.btn-dark { background:none; border:1.5px solid var(--border-light); border-radius:20px; padding:5px 10px; cursor:pointer; font-size:16px; transition:.2s; }
+.btn-dark:hover { background:var(--gray-light); }
+
+/* ── Main ── */
+main { padding:26px 28px; max-width:1400px; margin:0 auto; }
+
+/* ── Cards ── */
+#resumoEstoque { display:flex; justify-content:center; gap:18px; margin-bottom:26px; flex-wrap:wrap; }
+.card-resumo { background:#fff; box-shadow:0 4px 16px var(--shadow-default); border-radius:14px; width:190px; padding:20px 18px; text-align:center; transition:transform .2s,box-shadow .2s; border-top:4px solid var(--primary-medium); }
+.card-resumo:hover { transform:translateY(-6px); box-shadow:0 10px 28px var(--shadow-hover); }
+.titulo-card { font-size:12px; color:var(--text-muted); margin-bottom:10px; font-weight:bold; text-transform:uppercase; letter-spacing:.5px; }
+.valor-card { font-size:32px; font-weight:bold; color:var(--primary-dark); }
+.card-alerta { border-top-color:var(--danger)!important; }
+.card-alerta .valor-card { color:var(--danger)!important; }
+
+/* ── Spinner ── */
+.spinner { width:36px; height:36px; border:4px solid var(--border-light); border-top-color:var(--primary-medium); border-radius:50%; animation:spin .7s linear infinite; margin:0 auto; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* ── Paineis alerta ── */
+#painelReposicao, #painelVencimento { display:none; margin-bottom:20px; background:#fff; border-radius:12px; box-shadow:0 4px 14px var(--shadow-default); overflow:hidden; }
+#painelReposicao { border:1.5px solid #f5c6cb; }
+#painelVencimento { border:1.5px solid #fce8b2; }
+#painelReposicao h2 { background:var(--danger); color:#fff; padding:12px 20px; font-size:14px; margin:0; }
+#painelVencimento h2 { background:var(--warning); color:#fff; padding:12px 20px; font-size:14px; margin:0; }
+#tabelaReposicao, #tabelaVencimento { width:100%; border-collapse:collapse; }
+#tabelaReposicao th, #tabelaVencimento th, #tabelaReposicao td, #tabelaVencimento td { padding:10px 14px; text-align:center; font-size:13px; }
+#tabelaReposicao th { background:#fadbd8; color:#641e16; font-weight:bold; font-size:11px; text-transform:uppercase; }
+#tabelaVencimento th { background:#fef3cd; color:#856404; font-weight:bold; font-size:11px; text-transform:uppercase; }
+
+/* ── Filtros ── */
+#filtro { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:18px; align-items:flex-end; background:#fff; padding:16px 20px; border-radius:12px; box-shadow:0 2px 8px var(--shadow-default); }
+.grupo-filtro { display:flex; flex-direction:column; gap:5px; }
+.pesquisa-grande { flex:1; min-width:220px; }
+.grupo-filtro label { font-size:11px; font-weight:bold; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; }
+.input-filtro, .select-filtro { padding:9px 12px; border-radius:8px; border:1.5px solid var(--border-light); outline:none; font-size:14px; transition:border-color .2s,box-shadow .2s; background:var(--gray-light); }
+.input-filtro:focus, .select-filtro:focus { border-color:var(--primary-medium); box-shadow:0 0 0 3px rgba(50,130,184,.12); background:#fff; }
+.btn-pesquisa { padding:9px 22px; background:var(--primary-medium); color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:14px; font-weight:bold; transition:background-color .2s,transform .1s; }
+.btn-pesquisa:hover { background:var(--primary-dark); transform:translateY(-1px); }
+.topo-tabela { display:flex; align-items:center; }
+.btn-add { background:var(--primary-medium); color:#fff; font-size:22px; font-weight:bold; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%; text-decoration:none; transition:background-color .2s,transform .3s; box-shadow:0 4px 12px rgba(50,130,184,.35); }
+.btn-add:hover { background:var(--primary-dark); transform:scale(1.12) rotate(90deg); }
+
+/* ── Tabela principal ── */
+.tabela-wrapper { background:#fff; box-shadow:0 4px 16px var(--shadow-default); border-radius:12px; overflow:hidden; }
+#tabelaEstoque { width:100%; border-collapse:collapse; }
+#tabelaEstoque th { background:var(--primary-medium); color:#fff; font-weight:bold; padding:14px 12px; font-size:12px; text-transform:uppercase; letter-spacing:.4px; }
+#tabelaEstoque td { padding:13px 12px; text-align:center; font-size:14px; border-bottom:1px solid var(--border-light); }
+#tabelaEstoque tbody tr { transition:background-color .15s; }
+#tabelaEstoque tbody tr:hover { background:#eaf3fb; }
+#tabelaEstoque tr:nth-child(even) td { background:var(--gray-light); }
+
+/* Badges */
+.badge-ok      { background:#d4edda; color:#155724; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.badge-alerta  { background:#fff3cd; color:#856404; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.badge-critico { background:#f8d7da; color:#721c24; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.badge-venc    { background:#fce8b2; color:#856404; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+
+/* ── Paginação ── */
+#paginacao { margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px; }
+#pagina { border:1.5px solid var(--primary-medium); border-radius:6px; padding:5px 8px; }
+#btnVoltar, #btnProximo { padding:8px 18px; background:var(--primary-medium); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold; transition:background-color .2s; }
+#btnVoltar:hover, #btnProximo:hover { background:var(--primary-dark); }

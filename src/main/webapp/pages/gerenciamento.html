@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento — Sistema de Estoque</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/color.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/gerenciamento.css" />
+</head>
+<body>
+    <header id="header">
+        <div class="header-brand"><span class="hdr-icon">🏪</span><span class="hdr-kids">Sistema de </span><span class="hdr-store">Estoque</span></div>
+        <nav id="menu">
+            <ul class="menu-lista">
+                <li><a href="/pages/projeto.html">Início</a></li>
+                <li><a href="gerenciamento.html" class="menu-ativo">Gerenciamento</a></li>
+                <li><a href="cadastroProdutos.html" class="btn-menu">+ Produto</a></li>
+                <li><a href="#" id="btnLogout">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2 class="page-title">Gerenciamento de Produtos</h2>
+        <div class="barra-acoes">
+            <div class="grupo-filtro">
+                <label for="buscarNome">Pesquisar produto</label>
+                <input type="text" id="buscarNome" placeholder="Nome do produto...">
+            </div>
+            <div class="grupo-filtro">
+                <label for="buscarStatus">Status</label>
+                <select id="buscarStatus">
+                    <option value="">Todos</option>
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                </select>
+            </div>
+            <button class="btn-buscar" id="btnBuscar">Pesquisar</button>
+        </div>
+        <div class="tabela-wrapper">
+            <table id="tabelaGerenciamento">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Fabricante</th>
+                        <th>Marca</th>
+                        <th>Prateleira</th>
+                        <th>Quantidade</th>
+                        <th>Valor Unit.</th>
+                        <th>Status</th>
+                        <th>Reposição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoGerenciamento">
+                    <tr><td colspan="10"><div class="empty-state"><p>Carregando produtos...</p></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal Editar -->
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>✏️ Editar Produto</h2>
+                <button class="btn-fechar-modal" id="fecharEditar">✕</button>
+            </div>
+            <form id="formEditar">
+                <input type="hidden" id="editCodigo">
+                <div class="modal-linha">
+                    <div class="modal-grupo">
+                        <label>Código de Barras</label>
+                        <input type="text" id="editCodigoExib" readonly>
+                    </div>
+                    <div class="modal-grupo">
+                        <label>Nome do Produto</label>
+                        <input type="text" id="editNome" required>
+                    </div>
+                </div>
+                <div class="modal-linha">
+                    <div class="modal-grupo">
+                        <label>Fabricante</label>
+                        <input type="text" id="editFabricante" required>
+                    </div>
+                    <div class="modal-grupo">
+                        <label>Marca</label>
+                        <input type="text" id="editMarca" required>
+                    </div>
+                </div>
+                <div class="modal-linha">
+                    <div class="modal-grupo">
+                        <label>Valor Unitário (R$)</label>
+                        <input type="number" id="editValor" step="0.01" min="0" required>
+                    </div>
+                    <div class="modal-grupo">
+                        <label>Prateleira / Local</label>
+                        <input type="text" id="editPrateleira">
+                    </div>
+                    <div class="modal-grupo">
+                        <label>Qtd. Mínima Reposição</label>
+                        <input type="number" id="editQtdMinima" min="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancelar-modal" id="cancelarEditar">Cancelar</button>
+                    <button type="submit" class="btn-salvar-modal">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Movimentação -->
+    <div class="modal-overlay" id="modalMovimentacao">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="tituloMovimentacao">📦 Movimentação</h2>
+                <button class="btn-fechar-modal" id="fecharMovimentacao">✕</button>
+            </div>
+            <form id="formMovimentacao">
+                <input type="hidden" id="movCodigo">
+                <input type="hidden" id="movTipo">
+                <p class="mov-tipo-label">Produto: <span id="movNomeProduto">—</span></p>
+                <div class="modal-linha">
+                    <div class="modal-grupo">
+                        <label>Quantidade atual</label>
+                        <input type="number" id="movQtdAtual" readonly>
+                    </div>
+                    <div class="modal-grupo">
+                        <label>Quantidade a movimentar</label>
+                        <input type="number" id="movQtd" min="1" required placeholder="Ex: 10">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancelar-modal" id="cancelarMovimentacao">Cancelar</button>
+                    <button type="submit" class="btn-salvar-modal" id="btnConfirmarMov">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Excluir -->
+    <div class="modal-overlay" id="modalExcluir">
+        <div class="modal-box" style="max-width:420px; text-align:center;">
+            <div class="modal-header" style="justify-content:center; border:none; margin-bottom:10px;">
+                <h2 style="color:var(--danger)">⚠️ Excluir produto?</h2>
+            </div>
+            <p style="color:var(--text-muted); margin-bottom:24px;">
+                Essa ação não pode ser desfeita. Tem certeza que deseja excluir
+                <strong id="nomeExcluir"></strong>?
+            </p>
+            <input type="hidden" id="codigoExcluir">
+            <div class="modal-footer" style="justify-content:center;">
+                <button class="btn-cancelar-modal" id="cancelarExcluir">Cancelar</button>
+                <button class="btn-salvar-modal" id="confirmarExcluir" style="background-color:var(--danger);">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+    <script src="../js/gerenciamento.js"></script>
+    <script src="../js/validarLogin.js"></script>
+    <script src="../js/logout.js"></script>
+</body>
+</html>

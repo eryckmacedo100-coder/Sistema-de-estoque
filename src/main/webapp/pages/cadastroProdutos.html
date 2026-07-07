@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/color.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/cadastroProdutos.css" />
+    <title>Cadastrar Produto — Sistema de Estoque</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .msg-erro {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .btn-gerar {
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background .2s;
+            white-space: nowrap;
+        }
+        .btn-gerar:hover { background: var(--success-hover); }
+        .campo-codigo { display: flex; gap: 8px; align-items: flex-end; }
+        .campo-codigo .grupo-form { flex: 1; }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <h1 id="tituloCadastro">Sistema de Estoque</h1>
+        <nav id="menu">
+            <ul class="menu-lista">
+                <li><a href="/pages/projeto.html">Início</a></li>
+                <li><a href="gerenciamento.html">Gerenciamento</a></li>
+                <li><a href="cadastroProdutos.html" class="btn-menu menu-ativo">+ Produto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="form-container">
+            <h2>Cadastrar novo produto</h2>
+
+            <div class="msg-erro" id="msgErro"></div>
+
+            <form action="../cadastroProdutos" method="POST" id="formCadastro">
+
+                <div class="linha-form campo-codigo">
+                    <div class="grupo-form">
+                        <label>Código de Barras</label>
+                        <input type="text" name="codigoBarras" id="codigoBarras"
+                               placeholder="7890XXXXXXXXX" maxlength="13" required />
+                    </div>
+                    <button type="button" class="btn-gerar" id="btnGerar">🔀 Gerar automático</button>
+                </div>
+
+                <div class="linha-form">
+                    <div class="grupo-form">
+                        <label>Nome do produto</label>
+                        <input type="text" name="nomeProduto" required />
+                    </div>
+                </div>
+
+                <div class="linha-form">
+                    <div class="grupo-form">
+                        <label>Fabricante</label>
+                        <input type="text" name="fabricante" required />
+                    </div>
+                    <div class="grupo-form">
+                        <label>Marca</label>
+                        <input type="text" name="marca" required />
+                    </div>
+                </div>
+
+                <div class="linha-form">
+                    <div class="grupo-form">
+                        <label>Data de Fabricação</label>
+                        <input type="date" name="dataFabricacao" required />
+                    </div>
+                    <div class="grupo-form">
+                        <label>Data de Vencimento</label>
+                        <input type="date" name="dataVencimento" required />
+                    </div>
+                </div>
+
+                <div class="linha-form">
+                    <div class="grupo-form">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidade" id="quantidade" min="0" required />
+                    </div>
+                    <div class="grupo-form">
+                        <label>Valor Unitário (R$)</label>
+                        <input type="number" name="valor" id="valor" step="0.01" min="0" required />
+                    </div>
+                    <div class="grupo-form">
+                        <label>Total (R$)</label>
+                        <input type="number" name="total" id="total" readonly />
+                    </div>
+                </div>
+
+                <div class="linha-form">
+                    <div class="grupo-form">
+                        <label>Tipo de Movimentação</label>
+                        <select name="status" required>
+                            <option value="">Selecione</option>
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
+                        </select>
+                    </div>
+                    <div class="grupo-form">
+                        <label>Prateleira / Local</label>
+                        <input type="text" name="prateleira" placeholder="Ex: A1, Corredor 3" />
+                    </div>
+                </div>
+
+                <div class="linha-form">
+                    <div class="grupo-form">
+                        <label>Quantidade Mínima para Reposição</label>
+                        <input type="number" name="qtdMinima" id="qtdMinima" min="0" placeholder="Ex: 10" />
+                    </div>
+                </div>
+
+                <div class="acoes-form">
+                    <button type="submit" class="btn-salvar">Salvar produto</button>
+                    <a href="projeto.html" class="btn-cancelar">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="../js/cadastroProdutos.js"></script>
+    <script src="../js/codigoBarras.js"></script>
+</body>
+</html>
